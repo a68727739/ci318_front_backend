@@ -24,12 +24,12 @@ KindEditor.ready(function(K) {
 
 <body>
 <div class="container">
-    <div id="here_location">当前位置：内容管理<span>&gt;</span>添加分类</div>
+    <div id="here_location">当前位置：内容管理<span>&gt;</span>編輯分类</div>
     <div id="forms">
         <div class="box">
             <div class="box_border">
                 <div class="box_center">
-                    <form action="<?php echo site_url(MODULE.'/'.C.'/'.M)?>/add" class="jqtransform" method="post">
+                    <form action="<?php echo site_url(MODULE.'/'.C.'/'.M.'/'.$row['id'])?>/add" class="jqtransform" method="post">
                         <table class="form_table pt15 pb15" width="100%" border="0" cellpadding="0" cellspacing="0">
                             <tr >
                                 <td class="td_right">上级分类：</td>
@@ -38,15 +38,15 @@ KindEditor.ready(function(K) {
                                         <div class="select_containers ">
                                             <select name="pid" class="select">
                                                 <option value="0" selected="selected">顶级分类</option>
-												<?php 
+                                                <?php 
 													if(!empty($lists)):
 														foreach($lists as $v):
 													?>                                               
-                                                <option value="<?php echo $v['id']?>"><?php echo str_repeat('&nbsp;',($v['level']-1)*4),$v['name']?></option>
+                                                <option value="<?php echo $v['id']?>"<?php echo $row['pid']==$v['id'] ? 'selected="selected"':''?>><?php echo str_repeat('&nbsp;',($v['level']-1)*4),$v['name']?></option>
 												<?php
 														endforeach; 
 													endif;
-												?>
+												?>                                               
                                                                                             </select>
                                         </div>
                                     </div>
@@ -54,12 +54,12 @@ KindEditor.ready(function(K) {
                             </tr>
                             <tr>
                                 <td class="td_right">分类名称：</td>
-                                <td><input type="text" name="name" class="input-text lh30" required="required" /></td>
+                                <td><input type="text" name="name" class="input-text lh30" required="required" value="<?php echo $row['name']?>"/></td>
                             </tr>
                            
                             <tr>
                                 <td class="td_right">分类排序：</td>
-                                <td><input type="text" name="sort" class="input-text lh30" value="1" pattern="[0-9]+" /> 值越小越排在前</td>
+                                <td><input type="text" name="sort" class="input-text lh30" value="<?php echo $row['sort']?>" pattern="[0-9]+" /> 值越小越排在前</td>
                             </tr>
                             
                             <tr>

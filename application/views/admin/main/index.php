@@ -93,10 +93,10 @@ function menuScroll(num){
         </ul>
                 <h3> 内容管理 </h3>
         <ul>
-                        <li><a href="admin/documentcate/index" target="right">内容分类</a></li>
+                        <li><a href="<?php echo site_url(MODULE.'/documentcate/index')?>" target="right">内容分类</a></li>
                         <li><a href="<?php echo site_url(MODULE.'/documentcate/add')?>" target="right">添加分类</a></li>
-                        <li><a href="admin/document/index" target="right">内容列表</a></li>
-                        <li><a href="admin/document/add" target="right">添加内容</a></li>
+                        <li><a href="<?php echo site_url(MODULE.'/document/index')?>" target="right">内容列表</a></li>
+                        <li><a href="<?php echo site_url(MODULE.'/document/add')?>" target="right">添加内容</a></li>
                     </ul>
                 <h3> 广告管理 </h3>
         <ul>

@@ -9,6 +9,18 @@ class Admin_Controller extends MY_Controller{
 			exit();
 		}
 	}
+	// 分類級別
+	protected function _cate_level($data,$pid=0,$level=0){
+		$array=array();
+		foreach($data as $v){
+			if($v['pid']==$pid){
+				$v['level']=$level+1;
+				$array[]=$v;
+				$array=array_merge($array,$this->_cate_level($data,$v['id'],$level+1));
+			}
+		}
+		return $array;
+	}
 }
 class My_Controller extends CI_Controller{
 	public function __construct(){
