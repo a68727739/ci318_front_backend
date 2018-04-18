@@ -22,6 +22,7 @@ class Document_model extends My_Model{
 	}
 	//總條數
 	public function total_rows($where=array(),$like=array()){
+			
 		$this->db->where($where);
 		if(!empty($like)){
 			$this->db->like($like);
@@ -31,6 +32,7 @@ class Document_model extends My_Model{
 		if(empty($row)){
 			return 0;
 		}
+		p($this->db->last_query());
 		return $row['total'];
 		// $query=$this->db->get($this->t);
 		// $result=$query->result_array();

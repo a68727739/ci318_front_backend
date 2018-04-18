@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Document</title>
 <?php $this->load->view(MODULE.'/common/head');?>
+<?php $this->load->view(MODULE.'/common/kindeditor');?>
 </head>
 
 <body>
@@ -21,11 +22,11 @@
                                     <div class="select_border">
                                         <div class="select_containers ">
                                             <select name="documentcate_id" class="select">
-												<option value="0" selected="selected">-请选择-</option>
+												<option value="0">-请选择-</option>
 												<?php if(!empty($documentcate)):
 														foreach($documentcate as $v):
 													?>
-                                                <option value="<?php echo $v['id'];?>"><?php echo str_repeat('&nbsp;',($v['level']-1)*4),$v['name'];?></option>
+                                                <option value="<?php echo $v['id'];?>"<?php echo $v['id']==$this->uri->segment(4,0)?' selected="selected"':''?>><?php echo str_repeat('&nbsp;',($v['level']-1)*4),$v['name'];?></option>
 												<?php 
 														endforeach;
 													endif;?>

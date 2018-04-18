@@ -10,12 +10,13 @@ class Admin_Controller extends MY_Controller{
 		}
 	}
 	// 分類級別
-	protected function _cate_level($data,$pid=0,$level=0){
+	protected function _cate_level($data,$pid=0,$level=1){
 		$array=array();
-		foreach($data as $v){
+		foreach($data as $k=>$v){
 			if($v['pid']==$pid){
-				$v['level']=$level+1;
+				$v['level']=$level;
 				$array[]=$v;
+				unset($data[$k]);
 				$array=array_merge($array,$this->_cate_level($data,$v['id'],$level+1));
 			}
 		}

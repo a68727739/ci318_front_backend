@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Document</title>
 <?php $this->load->view(MODULE.'/common/head');?>
+<?php $this->load->view(MODULE.'/common/kindeditor');?>
 </head>
 
 <body>

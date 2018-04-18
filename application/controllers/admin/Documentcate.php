@@ -70,6 +70,10 @@ class Documentcate extends Admin_Controller{
 		if(empty($affected_rows)){
 			echo '<script>alert("刪除失敗");history.back();</script>';
 			exit();
+		}else{
+			$this->load->model(MODULE.'/Document_model');
+			$where=array('documentcate_id'=>$id);
+			$this->Document_model->del($where);
 		}
 		redirect(MODULE.'/'.C.'/index');
 		

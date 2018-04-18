@@ -41,8 +41,7 @@
                                 <tr class="tr">
                     <td class="td_center"><input type="checkbox" name="id[<?php echo $v['id']?>]" value="1" /></td>
                     <td><?php echo $v['name']?></td>
-                   
-                    <td>&nbsp;</td>
+                    <td><?php echo $v['cate_name']?></td>
                     <td><?php echo $v['sort']?></td>
                     
                     <td><?php echo date('Y-m-d H:i:s',$v['addtime'])?></td>
