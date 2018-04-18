@@ -3,8 +3,38 @@ defined('BASEPATH') || exit('NO direct script access allowed');
 class Document_model extends My_Model{
 	private $t='document';
 	// 列表
-	public function lists(){
-		return $this->db->order_by('sort ASC,id DESC')->get($this->t)->result_array();
+	public function lists($limit=2,$offset=0,$where=array(),$like=array()){
+		$this->db->select($this->t.'.*,'.$this->t.'cate.name AS cate_name');
+		$this->db->where($where);
+		if(!empty($like)){
+			$this->db->like($like);
+		}
+		
+		$this->db->order_by($this->t.'.sort ASC,'.$this->t.'.id DESC');
+		$this->db->limit($limit,$offset);
+		$this->db->join($this->t.'cate',$this->t.'.'.$this->t.'cate_id='.$this->t.'cate.id','LEFT');
+		$query=$this->db->get($this->t);
+		//p($this->db->last_query());
+		
+		$result=$query->result_array();
+		return $result;
+
+	}
+	//總條數
+	public function total_rows($where=array(),$like=array()){
+		$this->db->where($where);
+		if(!empty($like)){
+			$this->db->like($like);
+		}
+		
+		$row=$this->db->select('COUNT(id) AS total')->get($this->t)->row_array();
+		if(empty($row)){
+			return 0;
+		}
+		return $row['total'];
+		// $query=$this->db->get($this->t);
+		// $result=$query->result_array();
+		
 	}
 	// 查詢一條紀錄
 	public function row($where=array()){

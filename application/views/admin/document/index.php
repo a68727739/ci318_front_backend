@@ -8,7 +8,18 @@
 
 <body>
 <div class="container">
-    <div id="here_location"><form action="admin/document/index" method="get">内容分类：<select class="select" name="documentcate_id"><option value="0">-所有分类-</option></select>关键词：<input name="name" type="text" class="input-text lh25" value="" /><input class="btn btn82 btn_search" type="submit" value="搜索" /></form>当前位置：内容管理<span>&gt;</span>内容列表</div>
+    <div id="here_location"><form action="<?php echo site_url(MODULE.'/'.C.'/'.M);?>" method="get">内容分类：<select class="select" name="documentcate_id">
+	<option value="0">-所有分类-</option>
+	<?php
+		if(!empty($documentcate)):
+			foreach($documentcate as $v):
+	?>
+	<option value="<?php echo $v['id']?>"<?php echo $v['id']==$this->input->get('documentcate_id',0)?' selected="selected"':''?>><?php echo str_repeat('&nbsp;',($v['level']-1)*4),$v['name']?></option>
+	<?php
+			endforeach;
+		endif;
+	?>
+	</select>关键词：<input name="name" type="text" class="input-text lh25" value="<?php echo $this->input->get('name',NULL);?>" /><input class="btn btn82 btn_search" type="submit" value="搜索" /></form>当前位置：内容管理<span>&gt;</span>内容列表</div>
     <div id="table">
         <div class="box span10 oh">
             <table width="100%" border="0" cellpadding="0" cellspacing="0" class="list_table">
@@ -47,7 +58,7 @@
                 </tr>
                 </form>
                             </table>
-            <div class="pagination"></div>
+            <div class="pagination"><?php echo $pagination?></div>
         </div>
     </div>
 </div>
