@@ -32,13 +32,10 @@ class Document extends Admin_Controller
         //分頁
         $config['base_url'] = str_replace(config_item('url_suffix'),'',site_url(MODULE.'/'.C.'/'.M));
         $config['total_rows'] = $this->Document_model->total_rows($where, $like);
-		$config['per_page'] = 3;
-		$config['num_links'] =8;
+		$config['per_page'] = 10;
 		$config['uri_segment'] =4;
 		$config['suffix'] =$suffix;
-        $this->load->library('pagination');
-        $this->pagination->initialize($config);
-		$data['pagination']=$this->pagination->create_links();
+		$data['pagination']=$this->_pagination($config);
 		//分頁
 		$offset=$this->uri->segment($config['uri_segment'],0);
         $data['lists'] = $this->Document_model->lists($config['per_page'],$offset,$where, $like);
@@ -90,14 +87,27 @@ class Document extends Admin_Controller
     }
     // 刪除
     public function del()
-    {
-        $id = $this->uri->segment(4, 0);
-
+    {	
+		if(empty($_POST)){
+			$id = $this->uri->segment(4, 0);
+		}else{
+			$id=$this->input->post('id',array());
+		}
+		// p($id);
+		//  exit();
         if (empty($id)) {
             exit('參數非法');
-        }
-        $where = array('id' => $id);
-        $affected_rows = $this->Document_model->del($where);
+		}
+		if(is_array($id)){
+			$affected_rows=$this->Document_model->del(array(),$id);
+			
+		}else{
+			$where = array('id' => $id);
+			$affected_rows=$this->Document_model->del($where,array());
+			
+		}
+		// p($affected_rows);
+		// exit();
         if (empty($affected_rows)) {
             echo '<script>alert("刪除數據失敗");history.back();</script>';
             exit();

@@ -9,6 +9,14 @@ class Admin_Controller extends MY_Controller{
 			exit();
 		}
 	}
+	// 分頁
+	protected function _pagination($arr=array()){
+		$config['num_links'] =8;
+		$config=array_merge($config,$arr);
+        $this->load->library('pagination');
+        $this->pagination->initialize($config);
+		return $this->pagination->create_links();
+	}
 	// 分類級別
 	protected function _cate_level($data,$pid=0,$level=1){
 		$array=array();

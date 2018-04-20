@@ -10,7 +10,7 @@ class Document_model extends My_Model{
 			$this->db->like($like);
 		}
 		
-		$this->db->order_by($this->t.'.sort ASC,'.$this->t.'.id DESC');
+		$this->db->order_by($this->t.'cate_id ASC,'.$this->t.'.sort ASC,'.$this->t.'.id DESC');
 		$this->db->limit($limit,$offset);
 		$this->db->join($this->t.'cate',$this->t.'.'.$this->t.'cate_id='.$this->t.'cate.id','LEFT');
 		$query=$this->db->get($this->t);
@@ -32,7 +32,7 @@ class Document_model extends My_Model{
 		if(empty($row)){
 			return 0;
 		}
-		p($this->db->last_query());
+		// p($this->db->last_query());
 		return $row['total'];
 		// $query=$this->db->get($this->t);
 		// $result=$query->result_array();
@@ -66,11 +66,13 @@ class Document_model extends My_Model{
 		return $this->db->insert_id();
 	}
 	// 刪除
-	public function del($where=array()){
+	public function del($where=array(),$id=array()){
 		if(empty($where)){
-			return 0;
+			$this->db->where_in('id',$id)->delete($this->t);
+		}else{
+			$this->db->where($where)->delete($this->t);
 		}
-		$this->db->delete($this->t,$where);
+		
 		return $this->db->affected_rows();
 	}
 }

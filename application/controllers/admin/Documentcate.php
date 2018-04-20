@@ -65,15 +65,19 @@ class Documentcate extends Admin_Controller{
 			echo '<script>alert("參數非法");history.back();</script>';
 			exit();
 		}
-		$where=array('id'=>$id);
-		$affected_rows=$this->Documentcate_model->del($where);
+		$child=$this->Documentcate_model->get_child_cate($id);
+		$id=array_merge(array($id),$child);
+
+		$affected_rows=$this->Documentcate_model->del($id);
 		if(empty($affected_rows)){
 			echo '<script>alert("刪除失敗");history.back();</script>';
 			exit();
 		}else{
 			$this->load->model(MODULE.'/Document_model');
-			$where=array('documentcate_id'=>$id);
-			$this->Document_model->del($where);
+			foreach($id as $v){
+				$where=array('documentcate_id'=>$v);
+				$this->Document_model->del($where);
+			}
 		}
 		redirect(MODULE.'/'.C.'/index');
 		

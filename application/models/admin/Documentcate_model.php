@@ -3,8 +3,27 @@ defined('BASEPATH') || exit('NO direct script access allowed');
 class Documentcate_model extends MY_Model{
 	private $t='documentcate';
 	// 列表
-	public function lists($where=array()){
-		return $this->db->order_by('pid ASC, sort ASC,id ASC')->get_where($this->t,$where)->result_array();
+	public function lists($where=array(),$select=array()){
+		return $this->db->select($select)->order_by('pid ASC, sort ASC,id ASC')->get_where($this->t,$where)->result_array();
+	}
+	// 獲取子分類
+	public function get_child_cate($id=0){
+		if(empty($id)){
+			return FALSE;
+		}
+		$lists=$this->lists(array(),array('id','pid'));
+		return $this->get_child_cate_id($lists,$id);
+	}
+	// 
+	private function get_child_cate_id($data,$id){
+		$array=array();
+		foreach($data as $k=>$v){
+			if($v['pid']==$id){
+				$array[]=$v['id'];
+				$array=array_merge($array,$this->get_child_cate_id($data,$v['id']));
+			}
+		}
+		return $array;
 	}
 	// 查詢一條數據
 	public function row($where=array()){
@@ -33,11 +52,11 @@ class Documentcate_model extends MY_Model{
 		return $this->db->insert_id();
 	}
 	// 刪除
-	public function del($where=array()){
-		if(empty($where)){
+	public function del($id=array()){
+		if(empty($id)){
 			return 0;
 		}
-		$this->db->delete($this->t,$where);
+		$this->db->where_in('id',$id)->delete($this->t);
 		return $this->db->affected_rows();
 	}
 	

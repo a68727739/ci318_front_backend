@@ -33,13 +33,13 @@
                     <th width="140">添加时间</th>
                     <th width="80">操作</th>
                 </tr>
-                                <form id="document_form" action="admin/document/del" method="post">
+                                <form id="document_form" action="<?php echo site_url(MODULE.'/'.C.'/del')?>" method="post">
 								<?php 
 									if(!empty($lists)):
 										foreach($lists as $v):
 									?>
                                 <tr class="tr">
-                    <td class="td_center"><input type="checkbox" name="id[<?php echo $v['id']?>]" value="1" /></td>
+                    <td class="td_center"><input type="checkbox" name="id[]" value="<?php echo $v['id']?>" /></td>
                     <td><?php echo $v['name']?></td>
                     <td><?php echo $v['cate_name']?></td>
                     <td><?php echo $v['sort']?></td>
